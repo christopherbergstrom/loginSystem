@@ -5,21 +5,23 @@
 
     <main>
       <div class="wrapper-main">
-        <section class="section-default">
-          <h1>Signup</h1>
+        <section class="w3-card-4 signup-section">
+          <div class="w3-container w3-blue-grey">
+            <h1>Signup</h1>
+          </div>
           <?php
           // Here we create an error message if the user made an error trying to sign up.
           if (isset($_GET["error"])) {
             if ($_GET["error"] == "emptyfields") {
               echo '<p class="signuperror">Fill in all fields!</p>';
             }
-            else if ($_GET["error"] == "invaliduidmail") {
+            else if ($_GET["error"] == "invalidusernameemail") {
               echo '<p class="signuperror">Invalid username and e-mail!</p>';
             }
-            else if ($_GET["error"] == "invaliduid") {
+            else if ($_GET["error"] == "invalidusername") {
               echo '<p class="signuperror">Invalid username!</p>';
             }
-            else if ($_GET["error"] == "invalidmail") {
+            else if ($_GET["error"] == "invalidemail") {
               echo '<p class="signuperror">Invalid e-mail!</p>';
             }
             else if ($_GET["error"] == "passwordcheck") {
@@ -41,32 +43,32 @@
             // Here we check if the user already tried submitting data.
 
             // We check username.
-            if (!empty($_GET["uid"])) {
-              echo '<input type="text" name="uid" placeholder="Username" value="'.$_GET["uid"].'">';
+            if (!empty($_GET["username"])) {
+              echo '<input class="w3-input" type="text" name="username" placeholder="Username" value="'.$_GET["username"].'">';
             }
             else {
-              echo '<input type="text" name="uid" placeholder="Username">';
+              echo '<input class="w3-input" type="text" name="username" placeholder="Username">';
             }
 
-            // We check e-mail.
-            if (!empty($_GET["mail"])) {
-              echo '<input type="text" name="mail" placeholder="E-mail" value="'.$_GET["mail"].'">';
+            // We check e-email.
+            if (!empty($_GET["email"])) {
+              echo '<input class="w3-input" type="text" name="email" placeholder="E-mail" value="'.$_GET["email"].'">';
             }
             else {
-              echo '<input type="text" name="mail" placeholder="E-mail">';
+              echo '<input class="w3-input" type="text" name="email" placeholder="E-mail">';
             }
             ?>
-            <input type="password" name="pwd" placeholder="Password">
-            <input type="password" name="pwd-repeat" placeholder="Repeat password">
-            <button type="submit" name="signup-submit">Signup</button>
+            <input class="w3-input" type="password" name="password" placeholder="Password">
+            <input class="w3-input" type="password" name="password-repeat" placeholder="Repeat password">
+            <button class="w3-btn w3-blue-grey" type="submit" name="signup-submit">Signup</button>
           </form>
           <!--
           NOTES FOR ME BEFORE DOING PHP!
           <form class="form-signup" action="includes/signup.inc.php" method="post">
-            <input type="text" name="uid" placeholder="Username">
-            <input type="text" name="mail" placeholder="E-mail">
-            <input type="password" name="pwd" placeholder="Password">
-            <input type="password" name="pwd-repeat" placeholder="Repeat password">
+            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="email" placeholder="E-mail">
+            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="password-repeat" placeholder="Repeat password">
             <button type="submit" name="signup-submit">Signup</button>
           </form>
           -->

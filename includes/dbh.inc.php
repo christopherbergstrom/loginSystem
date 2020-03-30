@@ -1,4 +1,5 @@
 <?php
+// login credentials with my localhost username and password
 $dBServername = "localhost";
 $dBUsername = "root";
 $dBPassword = "root";

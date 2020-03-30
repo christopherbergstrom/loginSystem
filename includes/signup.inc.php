@@ -7,36 +7,38 @@ if (isset($_POST['signup-submit'])) {
   require 'dbh.inc.php';
 
   // We grab all the data which we passed from the signup form so we can use it later.
-  $username = $_POST['uid'];
-  $email = $_POST['mail'];
-  $password = $_POST['pwd'];
-  $passwordRepeat = $_POST['pwd-repeat'];
+  // here I change the post variable names to mine
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $passwordRepeat = $_POST['password-repeat'];
 
   // Then we perform a bit of error handling to make sure we catch any errors made by the user. Here you can add ANY error checks you might think of! I'm just checking for a few common errors in this tutorial so feel free to add more. If we do run into an error we need to stop the rest of the script from running, and take the user back to the signup page with an error message. As an additional feature we will also send all the data back to the signup page, to make sure all the fields aren't empty and the user won't need to type it all in again.
 
   // We check for any empty inputs. (PS: This is where most people get errors because of typos! Check that your code is identical to mine. Including missing parenthesis!)
+  // in each of these if statement I change the url to reflect my personal variable names
   if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat)) {
-    header("Location: ../signup.php?error=emptyfields&uid=".$username."&mail=".$email);
+    header("Location: ../signup.php?error=emptyfields&username=".$username."&email=".$email);
     exit();
   }
   // We check for an invalid username AND invalid e-mail.
   else if (!preg_match("/^[a-zA-Z0-9]*$/", $username) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header("Location: ../signup.php?error=invaliduidmail");
+    header("Location: ../signup.php?error=invalidusernameemail");
     exit();
   }
   // We check for an invalid username. In this case ONLY letters and numbers.
   else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-    header("Location: ../signup.php?error=invaliduid&mail=".$email);
+    header("Location: ../signup.php?error=invalidusername&email=".$email);
     exit();
   }
   // We check for an invalid e-mail.
   else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header("Location: ../signup.php?error=invalidmail&uid=".$username);
+    header("Location: ../signup.php?error=invalidemail&username=".$username);
     exit();
   }
   // We check if the repeated password is NOT the same.
   else if ($password !== $passwordRepeat) {
-    header("Location: ../signup.php?error=passwordcheck&uid=".$username."&mail=".$email);
+    header("Location: ../signup.php?error=passwordcheck&username=".$username."&email=".$email);
     exit();
   }
   else {
@@ -44,7 +46,8 @@ if (isset($_POST['signup-submit'])) {
     // We also need to include another error handler here that checks whether or the username is already taken. We HAVE to do this using prepared statements because it is safer!
 
     // First we create the statement that searches our database table to check for any identical usernames.
-    $sql = "SELECT uidUsers FROM users WHERE uidUsers=?;";
+    // I change my variable names here again
+    $sql = "SELECT username FROM users WHERE username=?;";
     // We create a prepared statement.
     $stmt = mysqli_stmt_init($conn);
     // Then we prepare our SQL statement AND check if there are any errors with it.
@@ -67,7 +70,7 @@ if (isset($_POST['signup-submit'])) {
       mysqli_stmt_close($stmt);
       // Here we check if the username exists.
       if ($resultCount > 0) {
-        header("Location: ../signup.php?error=usertaken&mail=".$email);
+        header("Location: ../signup.php?error=usertaken&email=".$email);
         exit();
       }
       else {
@@ -76,7 +79,7 @@ if (isset($_POST['signup-submit'])) {
         // Next thing we do is to prepare the SQL statement that will insert the users info into the database. We HAVE to do this using prepared statements to make this process more secure. DON'T JUST SEND THE RAW DATA FROM THE USER DIRECTLY INTO THE DATABASE!
 
         // Prepared statements works by us sending SQL to the database first, and then later we fill in the placeholders (this is a placeholder -> ?) by sending the users data.
-        $sql = "INSERT INTO users (uidUsers, emailUsers, pwdUsers) VALUES (?, ?, ?);";
+        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?);";
         // Here we initialize a new statement using the connection from the dbh.inc.php file.
         $stmt = mysqli_stmt_init($conn);
         // Then we prepare our SQL statement AND check if there are any errors with it.

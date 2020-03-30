@@ -5,7 +5,7 @@
 
     <main>
       <div class="wrapper-main">
-        <section class="section-default">
+        <section class="w3-panel w3-blue-grey w3-card-4 w3-center">
           <!--
           We can choose whether or not to show ANY content on our pages depending on if we are logged in or not. I talk more about SESSION variables in the login.inc.php file!
           -->
